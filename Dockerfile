@@ -2,6 +2,8 @@ FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
 
 WORKDIR /app
 
+ENV PYTHONUNBUFFERED=1
+
 # System deps
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ffmpeg libsndfile1 && \

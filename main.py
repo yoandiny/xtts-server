@@ -28,9 +28,10 @@ tts_model: TTS | None = None
 async def lifespan(app: FastAPI):
     global tts_model
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"[XTTS] Loading model on {device} …")
+    print(f"[XTTS] Device: {device}")
+    print("[XTTS] Loading model (first run will download ~1.8 GB) …")
     tts_model = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
-    print("[XTTS] Model ready.")
+    print("[XTTS] Model ready — server is accepting requests.")
     yield
     tts_model = None
 
