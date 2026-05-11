@@ -3,6 +3,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
+ENV COQUI_TOS_AGREED=1
 
 # System deps
 RUN apt-get update && \

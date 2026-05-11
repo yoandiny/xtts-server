@@ -3,6 +3,7 @@ FROM pytorch/pytorch:2.4.1-cuda12.4-cudnn9-runtime
 WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1
+ENV COQUI_TOS_AGREED=1
 
 # System deps
 RUN apt-get update && \
