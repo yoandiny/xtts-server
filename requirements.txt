@@ -1,4 +1,7 @@
-fastapi==0.115.6
-uvicorn[standard]==0.34.0
-TTS==0.22.0
-python-multipart==0.0.18
+fastapi
+uvicorn
+coqui-tts
+torch
+soundfile
+numpy
+python-multipart
