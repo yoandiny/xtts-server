@@ -8,6 +8,21 @@ from typing import Optional
 
 import torch
 import numpy as np
+import soundfile as sf
+
+# Patch torchaudio.load to use soundfile directly (avoids torchcodec/FFmpeg DLL issues on Windows)
+import torchaudio
+def _sf_load(filepath, *args, **kwargs):
+    data, samplerate = sf.read(filepath, dtype="float32")
+    # soundfile returns (samples,) for mono or (samples, channels) for stereo
+    tensor = torch.from_numpy(data)
+    if tensor.dim() == 1:
+        tensor = tensor.unsqueeze(0)  # (1, samples)
+    else:
+        tensor = tensor.T  # (channels, samples)
+    return tensor, samplerate
+torchaudio.load = _sf_load
+
 from TTS.api import TTS
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
