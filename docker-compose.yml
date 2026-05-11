@@ -1,0 +1,18 @@
+services:
+  tts-api:
+    build: .
+    container_name: tts-api
+    environment:
+      - PORT=${PORT:-8000}
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    volumes:
+      - ./speakers:/app/speakers
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
