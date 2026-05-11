@@ -1,6 +1,8 @@
 services:
-  tts-api:
-    build: .
+  tts-api-gpu:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: tts-api
     environment:
       - PORT=${PORT:-8000}
@@ -15,4 +17,21 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
+    profiles:
+      - gpu
+    restart: unless-stopped
+
+  tts-api-cpu:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    container_name: tts-api
+    environment:
+      - PORT=${PORT:-8000}
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    volumes:
+      - ./speakers:/app/speakers
+    profiles:
+      - cpu
     restart: unless-stopped
