@@ -10,6 +10,7 @@ services:
       - "${PORT:-8000}:${PORT:-8000}"
     volumes:
       - ./speakers:/app/speakers
+      - tts-models:/root/.local/share/tts
     restart: unless-stopped
 
   tts-api-gpu:
@@ -23,6 +24,7 @@ services:
       - "${PORT:-8000}:${PORT:-8000}"
     volumes:
       - ./speakers:/app/speakers
+      - tts-models:/root/.local/share/tts
     deploy:
       resources:
         reservations:
@@ -33,3 +35,6 @@ services:
     profiles:
       - gpu
     restart: unless-stopped
+
+volumes:
+  tts-models:

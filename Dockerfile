@@ -14,12 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # App code
 COPY main.py .
 
-# Pre-download the XTTS v2 model at build time so the container starts fast
-RUN python -c "from TTS.api import TTS; TTS('tts_models/multilingual/multi-dataset/xtts_v2')"
-
-# Speakers volume
-RUN mkdir -p /app/speakers
+# Volumes: model cache + speakers
+RUN mkdir -p /app/speakers /root/.local/share/tts
 VOLUME /app/speakers
+VOLUME /root/.local/share/tts
 
 EXPOSE 8000
 
