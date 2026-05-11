@@ -1,8 +1,9 @@
 fastapi
 uvicorn
-coqui-tts
+coqui-tts[codec]
 torch
 torchaudio
 soundfile
 numpy
 python-multipart
+transformers==4.57.6
