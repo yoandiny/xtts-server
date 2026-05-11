@@ -1,9 +1,22 @@
 services:
+  tts-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    container_name: tts-api
+    environment:
+      - PORT=${PORT:-8000}
+    ports:
+      - "${PORT:-8000}:${PORT:-8000}"
+    volumes:
+      - ./speakers:/app/speakers
+    restart: unless-stopped
+
   tts-api-gpu:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tts-api
+    container_name: tts-api-gpu
     environment:
       - PORT=${PORT:-8000}
     ports:
@@ -19,19 +32,4 @@ services:
               capabilities: [gpu]
     profiles:
       - gpu
-    restart: unless-stopped
-
-  tts-api-cpu:
-    build:
-      context: .
-      dockerfile: Dockerfile.cpu
-    container_name: tts-api
-    environment:
-      - PORT=${PORT:-8000}
-    ports:
-      - "${PORT:-8000}:${PORT:-8000}"
-    volumes:
-      - ./speakers:/app/speakers
-    profiles:
-      - cpu
     restart: unless-stopped
